@@ -1,8 +1,11 @@
 class Board
+  attr_accessor :board, :test
+
   def initialize
     @board = %w(_| _ |_
                 _| _ |_
                 _| _ |_)
+    @test = [1, 2, 3]
   end
 
   def print_board
