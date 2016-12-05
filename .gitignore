@@ -98,4 +98,4 @@ build-iPhoneSimulator/
 
 .gitignore
 .idea/
-board.rb
+game.rb
