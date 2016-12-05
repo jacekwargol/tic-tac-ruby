@@ -1,17 +1,26 @@
+require './board'
+require './player'
+
 class Game
-  def self.initialize
-    @board = %w(_| _ |_
-                _| _ |_
-                _| _ |_)
+  def initialize
+    @board = Board.new
+    @playerX = Player.new('X')
+    @playerO = Player.new('O')
   end
 
-  def self.print_board
-    @board.each_with_index do |ch, i|
-      [2, 5, 8].include?(i) ? print(ch + "\n") : print(ch)
-    end
+  def player_move(player, cell_num)
+    @board.change_state(cell_num, player.symbol)
+  end
+
+  def turn
+    @board.print_board
+    puts 'Choose cell'
+    cell = gets.to_i
+    player_move(@playerO, cell)
+    @board.print_board
   end
 end
 
 
-Game.initialize
-Game.print_board
+game = Game.new
+game.turn
