@@ -16,8 +16,8 @@ class Game
   def turn
     @board.print_board
     puts 'Choose cell:'
-    until (cell = gets.to_i).between?(0, @board.board.size-1)
-      puts 'Please choose number between 0 and 8:'
+    until (cell = gets.to_i).between?(0, @board.board.size-1) and !@board.board[cell]
+      puts 'Please choose number between 0 and 8. Cell must be empty:'
     end
     @@turn_counter % 2 == 0 ? player_move(@playerX, cell) : player_move(@playerO, cell)
     puts
