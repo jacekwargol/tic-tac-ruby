@@ -1,8 +1,11 @@
 require './game'
 require './board'
+require './player'
 
 
 class ComputerPlayer
+  attr_accessor :symbol
+
   def initialize(game)
     @game = game
     @symbol = 'O'
@@ -36,28 +39,17 @@ class ComputerPlayer
     if game.active_player.symbol == 'O'
       max_score_index = scores.each_with_index.max[1]
       @choice = moves[max_score_index]
-      return scores.max
+      return scores[max_score_index]
     else
       min_score_index = scores.each_with_index.min[1]
       @choice = moves[min_score_index]
-      return scores.min
+      return scores[min_score_index]
     end
   end
 
   def make_move
     find_best_move(@game)
-    puts @choice
     @game.player_move(@choice)
     @choice
   end
 end
-
-
-#
-# b = Board.new(3)
-game = Game.new
-cp = ComputerPlayer.new(game)
-cp.make_move
-cp.make_move
-cp.make_move
-cp.make_move
