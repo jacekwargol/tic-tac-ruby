@@ -61,6 +61,23 @@ class Game
     return false
   end
 
+  def horizontal_win?
+    @board.cells_equal?(@board.board[0], @board.board[1], @board.board[2]) or
+        @board.cells_equal?(@board.board[3], @board.board[4], @board.board[5]) or
+        @board.cells_equal?(@board.board[6], @board.board[7], @board.board[8])
+  end
+
+  def vertical_win?
+    @board.cells_equal?(@board.board[0], @board.board[3], @board.board[6]) or
+        @board.cells_equal?(@board.board[1], @board.board[4], @board.board[7]) or
+        @board.cells_equal?(@board.board[2], @board.board[5], @board.board[8])
+  end
+
+  def diagonal_win?
+    @board.cells_equal?(@board.board[0], @board.board[4], @board.board[8]) or
+        @board.cells_equal?(@board.board[2], @board.board[4], @board.board[6])
+  end
+
   def has_won?(player)
     @active_player != player
   end

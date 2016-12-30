@@ -15,10 +15,8 @@ class Board
   end
 
   def change_cell(cell_num, symbol)
-    if cell_num.between?(0, @board.size-1) and !@board[cell_num]
+    if cell_num.between?(0, 8) and !@board[cell_num]
       @board[cell_num] = symbol
-      # @non_empty_cells << cell_num
-      # return self
     end
     self
   end
