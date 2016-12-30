@@ -3,18 +3,39 @@ require './player'
 require './computer_player'
 
 class Game
-  attr_accessor :board, :player_o, :player_x, :winner, :active_player
+  attr_accessor :board, :player_o, :player_x, :player_ai, :winner, :active_player
 
   def initialize(*cells)
     @player_x = Player.new('X')
-    @player_o = ComputerPlayer.new(self)
-    # @player_o = Player.new('O')
+    @player_o = Player.new('O')
     @active_player = @player_x
     @board = Board.new
     if !cells.empty?
       cells[0].each_with_index { |cell, i| @board.change_cell(i, cell) if cell}
       @active_player = (@board.board.count('X') > @board.board.count('O') ? @player_o : @player_x)
     end
+  end
+
+  def start_game
+    puts 'Hello.'
+    puts 'Choose game mode:'
+    puts '1. Two-player game.'
+    puts '2. Game against ai.'
+    until (@user_choice = gets.chomp.to_i).between?(1, 2)
+      puts "I don't understand."
+    end
+
+    @player_o = ComputerPlayer.new(self) if @user_choice == 2
+    game_loop
+  end
+
+  def game_loop
+    until has_ended?
+      turn
+      player_o.make_move if(@user_choice == 2)
+    end
+
+    end_game
   end
 
   def player_move(cell_num)
@@ -29,8 +50,8 @@ class Game
 
   def turn
     @board.print_board
-    puts 'Choose cell:'
-    until (cell = gets.to_i).between?(0, @board.board.size-1) and !@board.board[cell]
+    puts "Player #{@active_player.symbol}, choose cell:"
+    until (cell = gets.to_i).between?(0, 8) and !@board.board[cell]
       puts 'Please choose number between 0 and 8. Cell must be empty:'
     end
     player_move(cell)
@@ -66,10 +87,6 @@ class Game
         @board.cells_equal?(@board.board[2], @board.board[4], @board.board[6])
   end
 
-  def has_won?(player)
-    @active_player != player
-  end
-
   def end_game
     puts '----------'
     @board.print_board
@@ -78,14 +95,5 @@ class Game
     else
       puts 'A draw.'
     end
-  end
-
-  def game_loop
-    until has_ended?
-      turn
-      player_o.make_move
-    end
-
-    end_game
   end
 end

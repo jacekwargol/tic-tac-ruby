@@ -3,7 +3,6 @@ class Board
 
   def initialize
     @board = Array.new(9)
-    @non_empty_cells = []
   end
 
   def print_board
